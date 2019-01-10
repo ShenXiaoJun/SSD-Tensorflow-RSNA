@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SSD: Single Shot MultiBox Detector in TensorFlow
 
 SSD is an unified framework for object detection with a single network. It has been originally introduced in this research [article](http://arxiv.org/abs/1512.02325).
@@ -167,3 +168,6 @@ python train_ssd_network.py \
 ```
 
 A number of pre-trained weights of popular deep architectures can be found on [TF-Slim models page](https://github.com/tensorflow/models/tree/master/slim).
+=======
+# SSD-Tensorflow-RSNA
+>>>>>>> 2c0b8b24d813b1ea874c87e76b5857ede1cfbeac
