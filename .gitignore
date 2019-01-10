@@ -21,4 +21,5 @@ nohup.out
 
 ssd-tensorflow.sublime-workspace
 ssd-tensorflow.sublime-project
-
+output/
+*.pyc
