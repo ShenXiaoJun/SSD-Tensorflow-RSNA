@@ -173,6 +173,6 @@ A number of pre-trained weights of popular deep architectures can be found on [T
 >>>>>>> 2c0b8b24d813b1ea874c87e76b5857ede1cfbeac
 
 # shenxj add
-cp_5kpic_train.sh 复制5k张图片到指定目录
-plot_change_dicom_to_jpg.py 转换dicom文件为jpeg
-rsna_get_xml.py 更具labels.cvs文件创建xml
+cp_5kpic_train.sh 复制5k张图片到指定目录 <br>
+plot_change_dicom_to_jpg.py 转换dicom文件为jpeg <br>
+rsna_get_xml.py 更具labels.cvs文件创建xml <br>
