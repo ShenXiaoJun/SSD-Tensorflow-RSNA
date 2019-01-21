@@ -24,3 +24,5 @@ ssd-tensorflow.sublime-project
 output/
 *.pyc
 RSNA/
+VOC-RSNA/
+tfrecords/

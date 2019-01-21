@@ -1,0 +1,93 @@
+#生成测试数据集tfrecord
+export DATASET_DIR=./VOC2007/test/VOCdevkit/VOC2007/
+export OUTPUT_DIR=./tfrecords
+python tf_convert_data.py \
+    --dataset_name=pascalvoc \
+    --dataset_dir=${DATASET_DIR} \
+    --output_name=voc_2007_test \
+    --output_dir=${OUTPUT_DIR}
+
+#使用测试数据集验证模型
+#512x512 显卡崩溃
+export DATASET_DIR=./tfrecords
+export EVAL_DIR=./logs/
+export CHECKPOINT_PATH=./checkpoints/VGG_VOC0712_SSD_512x512_ft_iter_120000.ckpt
+python eval_ssd_network.py \
+    --eval_dir=${EVAL_DIR} \
+    --dataset_dir=${DATASET_DIR} \
+    --dataset_name=pascalvoc_2007 \
+    --dataset_split_name=test \
+    --model_name=ssd_512_vgg \
+    --checkpoint_path=${CHECKPOINT_PATH} \
+    --batch_size=1
+
+#300x300
+export DATASET_DIR=./tfrecords
+export EVAL_DIR=./logs/
+export CHECKPOINT_PATH=./checkpoints/ssd_300_vgg.ckpt
+python eval_ssd_network.py \
+    --eval_dir=${EVAL_DIR} \
+    --dataset_dir=${DATASET_DIR} \
+    --dataset_name=pascalvoc_2007 \
+    --dataset_split_name=test \
+    --model_name=ssd_300_vgg \
+    --checkpoint_path=${CHECKPOINT_PATH} \
+    --batch_size=1
+
+batch_size=1
+Time spent : 291.573 seconds.
+Time spent per BATCH: 0.059 seconds.
+	
+batch_size=3
+Time spent : 246.309 seconds.
+Time spent per BATCH: 0.149 seconds.
+
+#训练模型
+export DATASET_DIR=./tfrecords
+export TRAIN_DIR=./logs/
+export CHECKPOINT_PATH=./checkpoints/ssd_300_vgg.ckpt
+python train_ssd_network.py \
+    --train_dir=${TRAIN_DIR} \
+    --dataset_dir=${DATASET_DIR} \
+    --dataset_name=pascalvoc_2007 \
+    --dataset_split_name=train \
+    --model_name=ssd_300_vgg \
+    --checkpoint_path=${CHECKPOINT_PATH} \
+    --save_summaries_secs=60 \
+    --save_interval_secs=600 \
+    --weight_decay=0.0005 \
+    --optimizer=adam \
+    --learning_rate=0.001 \
+    --batch_size=1
+	
+#测试刚才训练的模型
+export DATASET_DIR=./tfrecords
+export TRAIN_DIR=./logs/
+export EVAL_DIR=${TRAIN_DIR}/eval
+python eval_ssd_network.py \
+    --eval_dir=${EVAL_DIR} \
+    --dataset_dir=${DATASET_DIR} \
+    --dataset_name=pascalvoc_2007 \
+    --dataset_split_name=test \
+    --model_name=ssd_300_vgg \
+    --checkpoint_path=${TRAIN_DIR} \
+    --wait_for_checkpoints=True \
+    --batch_size=1 \
+    --max_num_batches=500
+
+export DATASET_DIR=./VOC2007/train/VOCdevkit/VOC2007/
+export OUTPUT_DIR=./tfrecords
+python tf_convert_data.py \
+    --dataset_name=pascalvoc \
+    --dataset_dir=${DATASET_DIR} \
+    --output_name=voc_2007_train \
+    --output_dir=${OUTPUT_DIR}
+	
+#生成RSNA tfrecord
+export DATASET_DIR=./VOC-RSNA/
+export OUTPUT_DIR=./tfrecords/
+python tf_convert_data.py \
+    --dataset_name=pascalvoc \
+    --dataset_dir=${DATASET_DIR} \
+    --output_name=voc_rsna_train \
+    --output_dir=${OUTPUT_DIR}
