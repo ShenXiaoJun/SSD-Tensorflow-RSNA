@@ -26,3 +26,5 @@ output/
 RSNA/
 VOC-RSNA/
 tfrecords/
+VOC-RSNA-test/
+VOC-RSNA-train/
